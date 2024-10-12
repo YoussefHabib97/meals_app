@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:meals_app/views/home_view.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {

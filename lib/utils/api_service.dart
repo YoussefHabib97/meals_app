@@ -1,6 +1,12 @@
+// Package imports:
 import 'package:dio/dio.dart';
 
 class ApiService {
+  // Singleton creation
+  ApiService._();
+  static final ApiService _instance = ApiService._();
+  factory ApiService() => _instance;
+
   final _dio = Dio();
 
   final String _baseUrl = 'http://www.themealdb.com/api/json/v1/';
