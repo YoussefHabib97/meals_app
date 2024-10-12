@@ -16,10 +16,16 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
   List<Category> categories = [];
 
+  void clearCategoriesList() {
+    categories.clear();
+  }
+
   Future<List<Category>> getCategories() async {
-    categories = [];
+    clearCategoriesList();
+
+    emit(CategoriesLoading());
+
     try {
-      emit(CategoriesLoading());
       var data = await ApiService().get(endPoint: 'categories.php');
 
       for (var category in data['categories']) {

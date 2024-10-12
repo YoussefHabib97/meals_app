@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meals_app/cubits/categories_cubit.dart';
 import 'package:meals_app/cubits/meal_cubit.dart';
 import 'package:meals_app/utils/generate_routes.dart';
-import 'package:meals_app/views/home_view.dart';
+import 'package:meals_app/views/categories_view.dart';
 
 void main() {
   runApp(const ApplicationRoot());
@@ -22,7 +22,7 @@ class ApplicationRoot extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => MealCubit()),
-        BlocProvider(create: (context) => CategoriesCubit()),
+        BlocProvider(create: (context) => CategoriesCubit()..getCategories()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -30,7 +30,7 @@ class ApplicationRoot extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         ),
-        initialRoute: HomeView.routeName,
+        initialRoute: CategoriesView.routeName,
         onGenerateRoute: onGenerateRoute,
       ),
     );
