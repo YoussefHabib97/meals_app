@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meals_app/constants/assets.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 // Project imports:
+import 'package:meals_app/constants/assets.dart';
 import 'package:meals_app/cubits/categories_cubit.dart';
 import 'package:meals_app/views/widgets/categories_grid_view.dart';
 
@@ -41,7 +41,7 @@ class CategoriesViewBody extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        child: Image.asset(Assets.assetsSkeletonImage),
+                        child: Image.asset(Assets.assets320x200),
                       ),
                     ),
                   ),
