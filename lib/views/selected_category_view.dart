@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meals_app/constants/assets.dart';
 import 'package:meals_app/cubits/meal_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -28,30 +29,46 @@ class SelectedCategoryView extends StatelessWidget {
             return Skeletonizer(
               child: ListView.separated(
                 itemBuilder: (context, index) {
-                  return const ListTile(
-                    title: Text(""),
+                  return ListTile(
+                    leading: Image.asset(Assets.assetsSkeletonImage),
+                    title: const Text("Placeholder Text"),
                   );
                 },
                 separatorBuilder: (context, index) {
                   return const SizedBox(height: 8);
                 },
-                itemCount: 2,
+                itemCount: 10,
               ),
             );
           } else if (state is MealSuccess) {
-            return ListView.separated(
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(BlocProvider.of<MealCubit>(context)
-                      .getMealsByCategory(category: categoryName)[index]
-                      .strMeal!),
-                );
-              },
-              separatorBuilder: (context, index) {
-                return const SizedBox(height: 8);
-              },
-              itemCount: 2,
-            );
+            return BlocProvider.of<MealCubit>(context)
+                    .getMealsByCategory(categoryName: categoryName)
+                    .isNotEmpty
+                ? ListView.separated(
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: Image.network(
+                          BlocProvider.of<MealCubit>(context)
+                              .getMealsByCategory(
+                                  categoryName: categoryName)[index]
+                              .strMealThumb!,
+                        ),
+                        title: Text(BlocProvider.of<MealCubit>(context)
+                            .getMealsByCategory(
+                                categoryName: categoryName)[index]
+                            .strMeal!),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 8);
+                    },
+                    itemCount: BlocProvider.of<MealCubit>(context)
+                        .getMealsByCategory(categoryName: categoryName)
+                        .length,
+                  )
+                : const Center(
+                    child: Text("This category currently has no meals"),
+                  );
           }
           return const Center(
             child: Text("An error has occured. Please try again later."),

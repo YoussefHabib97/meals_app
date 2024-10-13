@@ -42,13 +42,13 @@ class MealCubit extends Cubit<MealState> {
     }
   }
 
-  List<Meal> getMealsByCategory({required String category}) {
+  List<Meal> getMealsByCategory({required String categoryName}) {
     clearMealsByCategory();
 
     emit(MealLoading());
 
     mealsByCategory =
-        meals.where((meal) => meal.strCategory == category).toList();
+        meals.where((meal) => meal.strCategory == categoryName).toList();
 
     emit(MealSuccess());
     return [...mealsByCategory];
