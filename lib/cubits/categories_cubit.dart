@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:developer';
-
 // Package imports:
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,8 +29,11 @@ class CategoriesCubit extends Cubit<CategoriesState> {
         categories.add(Category.fromMap(category));
       }
 
+      categories.removeWhere(
+        (element) => element.strCategory!.contains('Pork'),
+      );
+
       emit(CategoriesSuccess());
-      log(categories.toString());
       return [...categories];
     } catch (e) {
       emit(CategoriesFailure());

@@ -12,10 +12,22 @@ class MealCubit extends Cubit<MealState> {
   MealCubit() : super(MealInitial());
 
   List<Meal> meals = [];
+  List<Meal> mealsByCategory = [];
 
-  Future<void> getMeals() async {
+  void clearMeals() {
+    meals.clear();
+  }
+
+  void clearMealsByCategory() {
+    mealsByCategory.clear();
+  }
+
+  Future<List<Meal>> getMeals() async {
+    clearMeals();
+
+    emit(MealLoading());
+
     try {
-      emit(MealLoading());
       var data = await ApiService().get(endPoint: 'search.php?s=');
 
       for (var meal in data['meals']) {
@@ -23,9 +35,22 @@ class MealCubit extends Cubit<MealState> {
       }
 
       emit(MealSuccess());
-    } on Exception {
+      return [...meals];
+    } catch (e) {
       emit(MealFailure());
       rethrow;
     }
+  }
+
+  List<Meal> getMealsByCategory({required String category}) {
+    clearMealsByCategory();
+
+    emit(MealLoading());
+
+    mealsByCategory =
+        meals.where((meal) => meal.strCategory == category).toList();
+
+    emit(MealSuccess());
+    return [...mealsByCategory];
   }
 }

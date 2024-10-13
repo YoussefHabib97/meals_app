@@ -10,7 +10,7 @@ import 'package:meals_app/cubits/meal_cubit.dart';
 import 'package:meals_app/utils/generate_routes.dart';
 import 'package:meals_app/views/categories_view.dart';
 
-void main() {
+Future<void> main() async {
   runApp(const ApplicationRoot());
 }
 
@@ -21,14 +21,14 @@ class ApplicationRoot extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => MealCubit()),
+        BlocProvider(create: (context) => MealCubit()..getMeals()),
         BlocProvider(create: (context) => CategoriesCubit()..getCategories()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Meals & Recipes',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
         ),
         initialRoute: CategoriesView.routeName,
         onGenerateRoute: onGenerateRoute,
