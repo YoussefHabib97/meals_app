@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meals_app/constants/assets.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 // Project imports:
+import 'package:meals_app/constants/assets.dart';
 import 'package:meals_app/cubits/meal_cubit.dart';
 import 'package:meals_app/views/meal_view.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class MealListItem extends StatelessWidget {
   const MealListItem({

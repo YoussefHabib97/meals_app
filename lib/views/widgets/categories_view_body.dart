@@ -41,7 +41,10 @@ class CategoriesViewBody extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        child: Image.asset(Assets.assets320x200),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(32),
+                          child: Image.asset(Assets.assets320x200),
+                        ),
                       ),
                     ),
                   ),

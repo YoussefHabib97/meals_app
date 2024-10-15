@@ -13,6 +13,7 @@ class MealCubit extends Cubit<MealState> {
 
   List<Meal> meals = [];
   List<Meal> mealsByCategory = [];
+  var meal = const Meal();
 
   void clearMeals() {
     meals.clear();
@@ -52,5 +53,21 @@ class MealCubit extends Cubit<MealState> {
 
     emit(MealSuccess());
     return [...mealsByCategory];
+  }
+
+  Future<Meal> getMealById({required String? id}) async {
+    meal = const Meal();
+    emit(MealLoading());
+
+    try {
+      var data = await ApiService().get(endPoint: 'lookup.php?i=$id');
+      meal = Meal.fromMap(data['meals'][0]);
+
+      emit(MealSuccess());
+      return meal;
+    } catch (e) {
+      emit(MealFailure());
+      rethrow;
+    }
   }
 }
