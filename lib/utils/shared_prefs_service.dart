@@ -1,3 +1,4 @@
+import 'package:meals_app/constants/themes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefsService {
@@ -8,8 +9,12 @@ class SharedPrefsService {
 
   late SharedPreferences _preferences;
 
+  late String kIsAppFirstRunKey;
+  late bool isAppFirstRun;
+
   Future<void> initSharedPrefs() async {
     _preferences = await SharedPreferences.getInstance();
+    await getIsAppFirstRun();
   }
 
   Future<bool> setData({required String key, required dynamic value}) async {
@@ -50,7 +55,16 @@ class SharedPrefsService {
   }
 
   Future<bool?> getIsAppFirstRun() async {
-    // if (_preferences.get(key)) return false;
-    return null;
+    if (_preferences.get(kIsAppFirstRunKey) == null ||
+        _preferences.get(kIsAppFirstRunKey) == true) {
+      isAppFirstRun = true;
+      setData(key: kIsAppFirstRunKey, value: isAppFirstRun);
+      setData(key: kAppThemeKey, value: kAppThemeDeviceDefault);
+      return isAppFirstRun;
+    } else {
+      isAppFirstRun = false;
+      setData(key: kIsAppFirstRunKey, value: isAppFirstRun);
+      return isAppFirstRun;
+    }
   }
 }
