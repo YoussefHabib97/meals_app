@@ -39,14 +39,49 @@ class _MealViewBodyState extends State<MealViewBody> {
   Widget build(BuildContext context) {
     return BlocBuilder<MealCubit, MealState>(
       builder: (context, state) {
+        // Use a local variable for the cubit
         final mealCubit = BlocProvider.of<MealCubit>(context);
 
+        // Check the state of the BLoC
         if (state is MealInitial || state is MealLoading) {
-          return _buildPlaceholder();
+          return Skeletonizer(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  const Text(
+                    "Placeholder",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Image.asset(Assets.assets700x700),
+                  const SizedBox(height: 16),
+                  const ExpansionTile(
+                    title: Text("Ingredients"),
+                    children: [],
+                  ),
+                  const ExpansionTile(
+                    title: Text("Instructions"),
+                    children: [],
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {},
+                    label: const Text("Watch Recipe"),
+                    icon: const Icon(Icons.play_arrow_rounded),
+                  ),
+                ],
+              ),
+            ),
+          );
         } else if (state is MealSuccess) {
           // Store the meal object
           final meal = mealCubit.meal;
 
+          // Check for null idMeal
           if (meal.idMeal == null) {
             return Skeletonizer(
               child:
@@ -114,6 +149,7 @@ class _MealViewBodyState extends State<MealViewBody> {
     );
   }
 
+  // Method to extract placeholder logic
   Widget _buildPlaceholder() {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
