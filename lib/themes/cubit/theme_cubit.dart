@@ -1,5 +1,8 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+// Package imports:
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
 import 'package:meals_app/constants/themes.dart';
 import 'package:meals_app/utils/shared_prefs_service.dart';
 

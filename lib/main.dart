@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meals_app/constants/themes.dart';
 
 // Project imports:
+import 'package:meals_app/constants/themes.dart';
 import 'package:meals_app/cubits/categories_cubit.dart';
 import 'package:meals_app/cubits/meal_cubit.dart';
 import 'package:meals_app/themes/cubit/theme_cubit.dart';
@@ -30,8 +30,10 @@ class ApplicationRoot extends StatelessWidget {
         BlocProvider(create: (context) => CategoriesCubit()..getCategories()),
         BlocProvider(create: (context) => MealCubit()..getMeals()),
       ],
-      child: BlocBuilder<AppThemeCubit, AppThemeState>(
-        builder: (context, state) {
+      child: BlocSelector<AppThemeCubit, AppThemeState, AppThemeState>(
+        selector: (state) =>
+            state, // Selects the entire state (you can optimize this)
+        builder: (context, selectedState) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Meals & Recipes',
@@ -46,11 +48,11 @@ class ApplicationRoot extends StatelessWidget {
                 brightness: Brightness.dark,
               ),
             ),
-            themeMode: state is DeviceDefaultThemeState ||
+            themeMode: selectedState is DeviceDefaultThemeState ||
                     SharedPrefsService.instance.getData(key: kAppThemeKey) ==
                         kAppThemeDeviceDefault
                 ? ThemeMode.system
-                : state is LightThemeState ||
+                : selectedState is LightThemeState ||
                         SharedPrefsService.instance
                                 .getData(key: kAppThemeKey) ==
                             kAppThemeLight

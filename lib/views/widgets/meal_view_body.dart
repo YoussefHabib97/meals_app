@@ -37,13 +37,15 @@ class _MealViewBodyState extends State<MealViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MealCubit, MealState>(
-      builder: (context, state) {
+    return BlocSelector<MealCubit, MealState, MealState>(
+      selector: (state) =>
+          state, // Selecting the entire state (can be optimized later)
+      builder: (context, selectedState) {
         // Use a local variable for the cubit
         final mealCubit = BlocProvider.of<MealCubit>(context);
 
         // Check the state of the BLoC
-        if (state is MealInitial || state is MealLoading) {
+        if (selectedState is MealInitial || selectedState is MealLoading) {
           return Skeletonizer(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -77,7 +79,7 @@ class _MealViewBodyState extends State<MealViewBody> {
               ),
             ),
           );
-        } else if (state is MealSuccess) {
+        } else if (selectedState is MealSuccess) {
           // Store the meal object
           final meal = mealCubit.meal;
 

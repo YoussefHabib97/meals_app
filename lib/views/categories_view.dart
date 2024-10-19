@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:meals_app/themes/widgets/theme_switcher.dart';
 
 // Project imports:
+import 'package:meals_app/themes/widgets/theme_switcher.dart';
 import 'widgets/categories_view_body.dart';
 
 class CategoriesView extends StatelessWidget {
